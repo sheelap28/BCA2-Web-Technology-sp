@@ -68,6 +68,22 @@ No new HTML tags today! Instead, here are the **CSS concepts** you'll learn:
 | `filter: brightness()` | Adjusts how bright/dark an element appears | Like turning the brightness knob on a TV |
 | `scroll-behavior: smooth` | Makes page scroll smoothly instead of jumping | 🛗 Elevator vs. teleportation — both reach the same floor |
 | `box-shadow` | Adds shadow around an element | 📦 The shadow under a book lying on a desk |
+| `line-height` | Controls vertical spacing between lines of text | 📏 The gap between lines in a ruled notebook — wider lines = easier to read |
+| `position: relative/absolute` | Controls how an element is positioned on the page | 📍 `relative` = "shift from my normal spot"; `absolute` = "pin me exactly inside my parent" |
+| `content` (CSS property) | Sets generated content for `::after`/`::before` pseudo-elements | 🏷️ Adding a virtual label or decoration that only CSS controls |
+| `overflow: hidden` | Clips anything that extends beyond an element's boundary | ✂️ A photo frame — anything outside the frame is cut off |
+| `display: flex` | Turns an element into a flexbox container for alignment | 📐 A magnetic board — children snap into rows/columns automatically |
+| `align-items` / `justify-content` | Align flex children vertically / horizontally inside a flex container | ↕️↔️ Centering items on the magnetic board — vertical and horizontal controls |
+| `letter-spacing` | Adjusts the gap between individual characters | 🔤 Spreading letters on a banner to fill the width evenly |
+| `text-decoration` | Adds or removes underline, overline, or strikethrough on text | ✏️ Underlining a word in your notebook — or erasing the underline |
+| `opacity` | Controls how transparent an element is (0 = invisible, 1 = solid) | 🪟 Frosted glass vs. clear glass — lower opacity = more see-through |
+| `break-inside: avoid` | Prevents a page break from splitting an element (print only) | 📄 "Don't tear this card in half when printing across two pages" |
+| `@keyframes` | Defines step-by-step frames of a custom CSS animation | 🎬 A flipbook — each keyframe is one drawing in the animation sequence |
+| `animation` | Applies a `@keyframes` animation with speed, delay, and repeat | ▶️ Pressing play on the flipbook — controls how fast and how many times it runs |
+| `background-attachment: fixed` | Keeps background image fixed while content scrolls over it | 🖼️ A painting on the wall — you walk past it, but it stays still (parallax) |
+| `rgba()` | Color value with transparency — `rgba(red, green, blue, alpha)` | 🎨 Mixing paint with water — alpha controls how see-through the color is |
+| `:focus` pseudo-class | Activates when user clicks into or tabs to an element | 🔦 A spotlight on the form field you're currently typing in |
+| `:not()` pseudo-class | Excludes elements matching a condition | 🚫 "Everyone EXCEPT those with the `.collapsed` class" |
 
 ---
 
@@ -295,6 +311,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 ```
 
+> 📌 **First Time Seeing `line-height`?** This property controls the vertical spacing between lines of text. A value of `1.7` means 1.7× the font size — if text is 16px, lines are spaced about 27px apart. The default is around `1.2`, which feels cramped for body text. Setting `line-height: 1.6`–`1.8` makes paragraphs much more comfortable to read — you'll see it applied to `body` in our complete stylesheet below.
+
 ---
 
 ## 📖 Hover Effects & Transitions
@@ -398,6 +416,10 @@ This is the most impressive effect — an underline that grows from the center w
 
 📌 **`::after` Pseudo-Element:** This creates a "virtual" element that doesn't exist in the HTML. It's like having an invisible underline decoration that only appears when the mouse is nearby. The `content: ''` is required — without it, the pseudo-element won't render.
 
+> 📌 **First Time Seeing `position: relative` and `position: absolute`?** By default, every element flows naturally in the page (`position: static`). Setting `position: relative` on `.nav-link` creates a positioning context — it becomes the "reference frame." Setting `position: absolute` on `::after` removes it from normal flow and lets `bottom: 0; left: 50%;` pin it to the bottom center of the link. Think of `relative` as the picture frame and `absolute` as a sticker you place exactly where you want inside that frame.
+
+> 📌 **First Time Seeing `content: ''` (CSS property)?** The `content` property is required for `::after` and `::before` pseudo-elements to render. Even an empty string (`''`) works — we just need the pseudo-element to exist so we can style it as an underline. Without `content`, the pseudo-element is invisible and takes up zero space.
+
 ---
 
 ## 📖 Smooth Scrolling
@@ -463,6 +485,8 @@ Make gallery images feel interactive — zoom slightly and brighten on hover:
 ```
 
 📌 **`filter: brightness(1.1)`** — CSS filters let you apply Photoshop-like effects to elements. `1.0` is normal, `1.1` is 10% brighter, `0.8` would be 20% darker. Other filters include `blur()`, `grayscale()`, and `contrast()`.
+
+> 📌 **First Time Seeing `overflow: hidden`?** When an image scales up on hover (`scale(1.05)`), it grows slightly beyond its container's boundary. `overflow: hidden` clips the excess — the image zooms but stays neatly within its rounded corners. Think of it like a photo frame: anything outside the frame edge is cut off.
 
 ---
 
@@ -592,6 +616,10 @@ When a student tries to print the timetable or contact info, we don't want the n
 ```
 
 📌 **`@media print`** — These styles ONLY apply when someone hits Ctrl+P (print). On screen, they're completely ignored. The `a[href]::after` trick is clever — it prints the actual URL next to every link, since you can't click a piece of paper!
+
+> 📌 **First Time Seeing `break-inside: avoid`?** When printing, the browser may split a card across two pages — top half on page 1, bottom on page 2. `break-inside: avoid` tells the printer "keep this entire card together on one page." It only matters inside `@media print` styles.
+
+> 📌 **First Time Seeing `a[href]` (attribute selector)?** Square brackets in CSS select elements based on their HTML attributes. `a[href]` matches only `<a>` tags that have an `href` attribute. Combined with `::after`, it generates the URL text next to printed links. This is a CSS-only trick — no JavaScript needed!
 
 ---
 
@@ -1185,6 +1213,20 @@ body.dark-mode .modal-content {
 
 > 🎨 **That's 300+ lines of production-quality CSS!** Every section of our website is now custom-styled, with hover effects, transitions, dark mode support, responsive design, and even print-friendly styles.
 
+> 📌 **First Time Seeing `display: flex`, `align-items`, `justify-content`?** In the back-to-top button styles (section 13 of the stylesheet), `display: flex` turns the button into a flex container. `align-items: center` vertically centers the arrow icon, and `justify-content: center` horizontally centers it. Together they create a perfectly centered icon inside a circle. Flexbox is Bootstrap's secret weapon — classes like `d-flex` and `align-items-center` are just shortcuts for these CSS properties!
+
+> 📌 **First Time Seeing `letter-spacing`?** In the countdown timer styles (section 14), `letter-spacing: 1px` adds 1 pixel of extra space between each character. This gives text a slightly spread-out, elegant look — commonly used for headings, countdown timers, and decorative labels.
+
+> 📌 **First Time Seeing `text-decoration`?** In the footer link hover styles (section 12), `text-decoration: underline` adds an underline on hover. By default, browsers underline all `<a>` links. Bootstrap removes this with `text-decoration: none`. Here we bring it back on hover for visual feedback.
+
+> 📌 **First Time Seeing `:focus`?** The `:focus` pseudo-class activates when a user clicks into or tabs to a form field. In the form styles (section 10), `.form-control:focus` adds a blue border and soft glow, giving users clear visual feedback about which input they're currently typing in. Always style `:focus` for accessibility — keyboard users rely on it!
+
+> 📌 **First Time Seeing `:not()`?** The `:not()` pseudo-class excludes elements matching a selector. In the accordion styles (section 11), `.accordion-button:not(.collapsed)` targets accordion buttons that are currently expanded — i.e., they do NOT have the `collapsed` class. It's the CSS equivalent of "everything except…"
+
+> 📌 **First Time Seeing `rgba()`?** Used throughout for shadows and semi-transparent backgrounds, `rgba(red, green, blue, alpha)` creates a color with transparency. The first three values (0–255) set the color; the fourth value (0–1) controls opacity. Example: `rgba(0, 0, 0, 0.5)` = black at 50% transparency. This is how the carousel caption gets a see-through dark overlay.
+
+> 📌 **First Time Seeing `opacity`?** Used in Challenge 3's animation, `opacity` controls how transparent an entire element is. `1` = fully visible, `0` = completely invisible, `0.8` = slightly faded. Unlike `rgba()` which sets transparency for a single color value, `opacity` makes the entire element and all its children transparent.
+
 ### Step 4: Test Your Changes
 
 1. **Save** both `index.html` and `css/custom.css`
@@ -1267,6 +1309,33 @@ Open `index.html` in the browser and verify everything:
 | `backdrop-filter` | Blurs background behind element | `backdrop-filter: blur(4px);` |
 | `border-radius` | Rounds element corners | `border-radius: 8px;` |
 | `cursor` | Changes mouse cursor style | `cursor: pointer;` |
+| `line-height` | Controls vertical spacing between text lines | `line-height: 1.7;` |
+| `position` | Controls element positioning mode | `position: relative;` / `position: absolute;` |
+| `content` | Sets generated content for pseudo-elements | `content: '';` / `content: " (" attr(href) ")";` |
+| `overflow` | Controls what happens when content exceeds boundary | `overflow: hidden;` |
+| `display` | Controls the layout model for an element | `display: flex;` / `display: none;` |
+| `align-items` | Vertically aligns children in a flex container | `align-items: center;` |
+| `justify-content` | Horizontally aligns children in a flex container | `justify-content: center;` |
+| `letter-spacing` | Adjusts spacing between characters | `letter-spacing: 1px;` |
+| `text-decoration` | Adds/removes underline, strikethrough, etc. | `text-decoration: underline;` |
+| `opacity` | Controls element transparency (0–1) | `opacity: 0.8;` |
+| `break-inside` | Prevents page breaks inside an element (print) | `break-inside: avoid;` |
+| `animation` | Applies a `@keyframes` animation to an element | `animation: pulse 2s ease-in-out infinite;` |
+| `background-attachment` | Controls whether background scrolls with content | `background-attachment: fixed;` |
+| `background-position` | Sets starting position of background image | `background-position: center;` |
+| `background-repeat` | Controls background image tiling | `background-repeat: no-repeat;` |
+| `background-size` | Scales background image to fit | `background-size: cover;` |
+| `color` | Sets text color (from earlier sessions) | `color: #2c3e50;` |
+| `background-color` | Sets element background color (from earlier sessions) | `background-color: var(--primary-color);` |
+| `font-size` | Sets size of text (from earlier sessions) | `font-size: 1.8rem;` |
+| `font-weight` | Sets thickness/boldness of text (from earlier sessions) | `font-weight: 700;` |
+| `padding` | Sets inner spacing of an element (from earlier sessions) | `padding: 60px 0;` |
+| `margin-bottom` / `margin-top` | Sets outer spacing on one side (from earlier sessions) | `margin-bottom: 1rem;` |
+| `border` | Sets border style, width, and color (from earlier sessions) | `border: 1px solid #ccc;` |
+| `border-color` | Sets border color separately (from earlier sessions) | `border-color: var(--primary-color);` |
+| `border-top` | Sets top border only (from earlier sessions) | `border-top: 1px solid #eee;` |
+| `width` / `height` | Sets element dimensions (from earlier sessions) | `width: 45px; height: 45px;` |
+| `background` | Shorthand for background properties (from earlier sessions) | `background: rgba(0, 0, 0, 0.5);` |
 
 ### CSS Selectors Used Today
 
@@ -1280,6 +1349,23 @@ Open `index.html` in the browser and verify everything:
 | `body.dark-mode .card` | A card inside body when dark mode is active | `body.dark-mode .card { ... }` |
 | `@media (max-width)` | Styles for screens at or below a width | `@media (max-width: 768px) { ... }` |
 | `@media print` | Styles only for printing | `@media print { ... }` |
+| `:focus` | When an element has keyboard/click focus | `.form-control:focus { border-color: blue; }` |
+| `:not()` | Excludes elements matching a selector | `.accordion-button:not(.collapsed) { ... }` |
+| `a[href]` | Attribute selector — elements with a specific attribute | `a[href]::after { content: " (" attr(href) ")"; }` |
+| `.class1.class2` | Compound selector — element with both classes | `.nav-link.active::after { width: 100%; }` |
+| `@keyframes name` | Defines animation keyframes | `@keyframes pulse { 0% { ... } 100% { ... } }` |
+
+### CSS Functions Used Today
+
+| Function | What It Does | Example |
+|----------|-------------|---------|
+| `var()` | Retrieves a CSS variable's value | `color: var(--primary-color);` |
+| `rgba()` | Creates a color with transparency (alpha) | `rgba(0, 0, 0, 0.5)` = 50% transparent black |
+| `translateY()` | Moves element up (negative) or down (positive) | `transform: translateY(-5px);` |
+| `scale()` | Scales element larger (>1) or smaller (<1) | `transform: scale(1.05);` |
+| `blur()` | Applies Gaussian blur effect | `backdrop-filter: blur(4px);` |
+| `brightness()` | Adjusts element brightness | `filter: brightness(1.1);` |
+| `attr()` | Retrieves an HTML attribute's value for use in CSS | `content: " (" attr(href) ")";` |
 
 ### CSS Variable Cheat Sheet
 
@@ -1293,6 +1379,78 @@ Open `index.html` in the browser and verify everything:
 | `--font-heading` | `'Poppins'` | `'Poppins'` | All headings |
 | `--font-body` | `'Open Sans'` | `'Open Sans'` | Body text |
 | `--transition-speed` | `0.3s` | `0.3s` | All animations |
+
+### HTML Tags Used in Code Blocks
+
+| Tag | Type | What It Does |
+|-----|------|-------------|
+| `<head>` | Structure | Contains metadata, links, and title (from Session 1) |
+| `<meta>` | Metadata | Provides page metadata like character set and viewport (from Session 1) |
+| `<title>` | Metadata | Sets the browser tab title (from Session 1) |
+| `<link>` | Resource | Connects external resources (CSS files, fonts) to the page |
+| `html` | Root element | The document root — targeted by `:root` in CSS (from Session 1) |
+| `body` | Structure | The visible page content container (from Session 1) |
+| `h1`–`h6` | Heading | Section headings from largest to smallest (from Session 1) |
+| `a` | Inline | Creates hyperlinks (from Session 1) |
+| `nav` | Semantic | Defines navigation section — used in specificity example (from Session 2) |
+| `section` | Semantic | Defines a thematic section of the page (from Session 3) |
+| `footer` | Semantic | Defines the page footer section (from Session 7) |
+| `img` | Media | Embeds images — targeted via `.carousel-item img` (from Session 3) |
+| `p` | Block | Paragraph element — used in specificity examples (from Session 1) |
+
+### HTML Attributes Used in Code Blocks
+
+| Attribute | Used On | What It Does |
+|-----------|---------|-------------|
+| `charset` | `<meta>` | Declares character encoding — always `UTF-8` (from Session 1) |
+| `name` | `<meta>` | Identifies the type of metadata (e.g., `viewport`) (from Session 1) |
+| `content` | `<meta>` | Provides the metadata value (from Session 1) |
+| `href` | `<link>`, `<a>` | URL of the linked resource or destination (from Session 1) |
+| `rel` | `<link>` | Defines relationship — `stylesheet` means "this is a CSS file" |
+| `style` | Any element | Applies inline CSS directly — mentioned in specificity (from Session 10, Lab 10) |
+
+### Bootstrap Classes Used in Code Blocks
+
+| Class | Type | What It Does |
+|-------|------|-------------|
+| `.navbar` | Navigation | Creates the responsive navigation bar container (from Session 2) |
+| `.navbar-brand` | Navigation | Styles the site name/logo in the navbar (from Session 2) |
+| `.nav-link` | Navigation | Styles individual navigation links (from Session 2) |
+| `.active` | State | Marks the currently active navigation link (from Session 2) |
+| `.carousel` | Component | Creates the image slideshow container (from Session 3) |
+| `.carousel-caption` | Component | Overlay text on carousel slides (from Session 3) |
+| `.carousel-item` | Component | Individual slide inside the carousel (from Session 3) |
+| `.display-4` | Typography | Large display heading size (from Session 3) |
+| `.lead` | Typography | Larger, lighter paragraph text for subtitles (from Session 3) |
+| `.card` | Component | Creates a bordered content container with padding (from Session 4) |
+| `.card-title` | Component | Styles the heading inside a card (from Session 4) |
+| `.card-body` | Component | The padded content area inside a card (from Session 4) |
+| `.card-img-top` | Component | Image at the top of a card (from Session 4) |
+| `.table` | Component | Styles an HTML table with Bootstrap formatting (from Session 5) |
+| `.form-control` | Form | Styles text inputs and textareas (from Session 7) |
+| `.form-select` | Form | Styles dropdown `<select>` elements (from Session 7) |
+| `.form-label` | Form | Styles form field labels (from Session 7) |
+| `.btn` | Button | Base button styling (from Session 2) |
+| `.btn-primary` | Button | Blue primary action button (from Session 2) |
+| `.btn-secondary` | Button | Grey secondary action button (from Session 4) |
+| `.btn-outline-primary` | Button | Outlined primary button with transparent fill (from Session 8) |
+| `.accordion-button` | Component | Clickable header of an accordion item (from Session 12) |
+| `.accordion-body` | Component | Collapsible content area of an accordion (from Session 12) |
+| `.collapsed` | State | Indicates an accordion/collapse item is closed (from Session 12) |
+| `.modal-content` | Component | The visible content box inside a modal dialog (from Session 9) |
+
+### Custom Classes Used in Code Blocks
+
+| Class | Type | What It Does |
+|-------|------|-------------|
+| `.back-to-top` | Custom utility | Styles the back-to-top floating button (from Session 11) |
+| `.dark-mode` | Custom state | Applied to `<body>` to enable dark theme (from Session 10) |
+| `.gallery-img` | Custom | Styles gallery images with hover effects (from Session 6) |
+| `.countdown-timer` | Custom | Styles the event countdown timer display (from Session 9) |
+| `.text-accent` | Custom utility | **NEW** — Applies the accent color to text |
+| `.bg-brand` | Custom utility | **NEW** — Applies primary brand color as background with light text |
+| `.shadow-hover` | Custom utility | **NEW** — Adds a shadow that appears on hover |
+| `.hero-section` | Custom | **NEW** — Styles the hero section for parallax background (Challenge 2) |
 
 ---
 
