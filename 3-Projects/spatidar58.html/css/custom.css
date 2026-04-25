@@ -1,0 +1,13 @@
+/* css variables */
+:root{
+    --clr-shadow:grey;
+}
+/* info cards styleing */
+.info-card{
+    border-radius: 0.5rem;
+    transition: transform 0.5em ease, box-shadow 0.5s ease;
+}
+.info-card:hover{
+    transform: scale(1.03);
+    box-shadow: 0 10px 25px var(--clr-shadow);
+}
